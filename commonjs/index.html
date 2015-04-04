@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Common.js module</title>
+  <link rel="stylesheet" href="../lib/github.css">
+</head>
+<body>
+  <h1>Common.js module</h1>
+  <p>Steps to run on browser:</p>
+  <ul>
+    <li><pre>npm install -g browserify</pre></li>
+    <li><pre>browserify src/main.js -o target/bundle.js</pre></li>
+  </ul>
+  <p>Just open the console...</p>
+
+  <pre><code class="javascript">
+// zoo.js
+var getBarkStyle = function(isHowler) {
+  return isHowler? 'woooooow!': 'woof, woof!';
+};
+var Dog = function(name, breed) {
+  this.bark = function() {
+    return name + ': ' + getBarkStyle(breed === 'husky');
+  };
+};
+var Wolf = function(name) {
+  this.bark = function() {
+    return name + ': ' + getBarkStyle(true);
+  };
+};
+
+module.exports = {
+  Dog: Dog,
+  Wolf: Wolf
+};
+  </code></pre>
+
+  <pre><code class="javascript">
+// main.js
+var Zoo = require('./zoo');
+
+var myDog = new Zoo.Dog('Sherlock', 'beagle');
+console.log(myDog.bark()); // Sherlock: woof, woof!
+
+var myWolf = new Zoo.Wolf('Werewolf');
+console.log(myWolf.bark()); // Werewolf: woooooow!
+  </code></pre>
+
+  <script type="text/javascript" src="target/bundle.js"></script>
+
+  <script type="text/javascript" src="../lib/highlight.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
